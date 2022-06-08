@@ -26,9 +26,9 @@ RUN mkdir /home/aceuser/bars && \
         /opt/ibm/ace-12/server/bin/mqsipackagebar -a bars/HelloWorldAPI.bar -k HelloWorldAPI && \
         ace_compile_bars.sh && \
         mv -v bars /home/aceuser/initial-config/bars        
-#USER 0
-#RUN chmod -R 777 /home/aceuser/initial-config/bars && \
-#    chmod -R 777 /home/aceuser/ace-server/run/NewOrdersService && \
-#    chmod -R 777 /home/aceuser/ace-server/run/HelloWorldAPI
+USER 0
+RUN chmod -R 777 /home/aceuser/initial-config/bars && \
+    chmod -R 777 /home/aceuser/ace-server/run/NewOrdersService && \
+    chmod -R 777 /home/aceuser/ace-server/run/HelloWorldAPI
     
 USER aceuser
