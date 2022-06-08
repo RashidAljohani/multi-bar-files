@@ -1,0 +1,33 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "title" : "NewOrdersService",
+    "version" : "0.0.1",
+    "description" : "NewOrdersService"
+  },
+  "paths" : {
+    "/put" : {
+      "post" : {
+        "operationId" : "postPut",
+        "responses" : {
+          "200" : {
+            "description" : "The operation was successful."
+          }
+        },
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "description" : "Insert a put",
+        "parameters" : [ {
+          "name" : "body",
+          "in" : "body",
+          "schema" : {
+            "type" : "string"
+          },
+          "description" : "The request body for the operation",
+          "required" : true
+        } ]
+      }
+    }
+  },
+  "basePath" : "/newordersservice/v1"
+}
