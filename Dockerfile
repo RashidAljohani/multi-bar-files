@@ -1,4 +1,5 @@
-FROM icr.io/appc-dev/ace-server@sha256:a41f7501fe4025d2705bcabf1ad2ff523bcaf9ec263b98054501de1fc0cf5f62
+# 12.0.7.0-r4
+FROM cp.icr.io/cp/appc/ace-server-prod@sha256:558e2d74fdd4ea291d56eab1360167294e3385defa7fe1f4701b27dbb6e6bba6
 
 ENV SUMMARY="Integration Server for App Connect Enterprise" \
     DESCRIPTION="Integration Server for App Connect Enterprise" \
@@ -14,21 +15,16 @@ LABEL summary="$SUMMARY" \
       io.openshift.tags="$PRODNAME,$COMPNAME" \
       com.redhat.component="$PRODNAME-$COMPNAME" \
       name="$PRODNAME/$COMPNAME" \
-      version="12.0.4.0-r2"
+      version="12.0.7.0-r4"
     
+RUN mkdir /tmp/projects
+COPY NewOrdersService /tmp/projects/NewOrdersService
+COPY HelloWorldAPI /tmp/projects/HelloWorldAPI
 
-COPY NewOrdersService /home/aceuser/NewOrdersService
-COPY HelloWorldAPI /home/aceuser/HelloWorldAPI
+RUN source /opt/ibm/ace-12/server/bin/mqsiprofile && \
+    ibmint deploy --input-path /tmp/projects --output-work-directory /home/aceuser/ace-server
 
-RUN mkdir /home/aceuser/bars && \
-        source /opt/ibm/ace-12/server/bin/mqsiprofile && \
-        /opt/ibm/ace-12/server/bin/mqsipackagebar -a bars/NewOrdersService.bar -k NewOrdersService && \
-        /opt/ibm/ace-12/server/bin/mqsipackagebar -a bars/HelloWorldAPI.bar -k HelloWorldAPI && \
-        ace_compile_bars.sh && \
-        mv -v bars /home/aceuser/initial-config/bars        
 USER 0
-RUN chmod -R 777 /home/aceuser/initial-config/bars && \
-    chmod -R 777 /home/aceuser/ace-server/run/NewOrdersService && \
-    chmod -R 777 /home/aceuser/ace-server/run/HelloWorldAPI
+RUN chmod -R 777 /home/aceuser/ace-server/run/*
     
 USER aceuser
