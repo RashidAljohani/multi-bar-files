@@ -4,7 +4,7 @@ CREATE COMPUTE MODULE getInfo_Compute
 	CREATE FUNCTION Main() RETURNS BOOLEAN
 	BEGIN
 
-		Set OutputRoot.JSON.Data.message = "Hello, world!";
+		Set OutputRoot.JSON.Data.message = 'Hello, world!';
 
 		RETURN TRUE;
 	END;
